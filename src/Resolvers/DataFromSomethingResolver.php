@@ -5,6 +5,7 @@ namespace Spatie\LaravelData\Resolvers;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Exceptions\CannotCreateDataFromValue;
@@ -33,6 +34,10 @@ class DataFromSomethingResolver
 
         if ($value instanceof Model) {
             return $this->dataFromModelResolver->execute($class, $value);
+        }
+
+        if ($value instanceof FormRequest) {
+            return $this->dataFromArrayResolver->execute($class, $value->validated());
         }
 
         if ($value instanceof Request) {

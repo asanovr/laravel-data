@@ -623,24 +623,6 @@ class DataTest extends TestCase
     }
 
     /** @test */
-    public function it_can_add_the_with_data_trait_to_a_request()
-    {
-        $formRequest = new class () extends FormRequest {
-            use WithData;
-
-            public string $dataClass = SimpleData::class;
-        };
-
-        $formRequest->replace([
-            'string' => 'Hello World',
-        ]);
-
-        $data = $formRequest->getData();
-
-        $this->assertEquals(SimpleData::from('Hello World'), $data);
-    }
-
-    /** @test */
     public function it_can_add_the_with_data_trait_to_a_model()
     {
         $model = new class () extends Model {
